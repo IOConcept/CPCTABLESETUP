@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Table with Chairs and Roles</title>
+    <style>
+        body {
+            background-color: #000;
+            color: #fff;
+            font-family: 'Lucida Console', Monaco, monospace;
+            font-size: 16px;
+            line-height: 1.5;
+        }
+
+        h1, h2 {
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-top: 2em;
+        }
+
+        table {
+            margin: 0 auto;
+            border-collapse: collapse;
+            box-shadow: 0px 0px 10px rgba(255,255,255,0.1);
+            overflow-x: auto;
+            max-width: 100%;
+        }
+
+        th, td {
+            border: 1px solid #fff;
+            padding: 0.5em;
+            text-align: center;
+        }
+
+        th {
+            background-color: #333;
+        }
+
+        tr:nth-child(even) {
+            background-color: #222;
+        }
+
+        select {
+            font-size: inherit;
+            padding: 4px;
+            border-radius: 4px;
+            border: 1px solid #fff;
+            background-color: transparent;
+            color: #fff;
+        }
+
+        input[type="submit"] {
+            display: block;
+            margin: 2em auto;
+            padding: 0.5em 1em;
+            font-size: inherit;
+            font-weight: bold;
+            color: #fff;
+            background-color: #333;
+            border-radius: 4px;
+            border: none;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        input[type="submit"]:hover {
+            cursor: pointer;
+            background-color: #444;
+        }
+    </style>
+</head>
+<body>
+    <h1>Table with Chairs and Roles</h1>
+    {% for table in table_list %}
+        <h2>{{ table.name }}</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Chair</th>
+                    <th>Role</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for chair in table.chairs %}
+                    <tr>
+                        <td>{{ chair.name }}</td>
+                        <td>{{ chair.role }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endfor %}
+    <form method="post">
+        <table>
+            <thead>
+                <tr>
+                    <th>Chair</th>
+                    <th>Role</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for chair in table_list[0].chairs %}
+                    <tr>
+                        <td>{{ chair.name }}</td>
+                        <td>
+                            <select name="{{ chair.name }}" id="{{ chair.name }}">
+                                {% for role in roles %}
+                                    {% if role == chair.role %}
+                                        <option value="{{ role }}" selected>{{ role }}</option>
+                                    {% else %}
+                                        <option value="{{ role }}">{{ role }}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>
